@@ -1,0 +1,19 @@
+# Read about `build.yaml` at https://pub.dev/packages/build_config
+targets:
+  $default:
+    builders:
+      generic_json_serializable:
+        generate_for:
+          - test/integration/*
+      generic_api_generator:
+        generate_for:
+          - test/integration/*
+
+builders:
+  generic_api_generator:
+    import: "package:generic_api_generator/generic_api_generator.dart"
+    builder_factories: ["genericApiBuilder"]
+    build_extensions: {".dart": [".generic_api.dart"]}
+    build_to: cache # 构建输出:cache-缓存，不生成文件;source-生成源文件
+    auto_apply: dependents
+    applies_builders: ["source_gen|combining_builder"]
